@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoTech — Interface HTML + CSS (Sem JS)</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topo">
+    <div class="container">
+        <h1>🔧 AutoTech — Sistema de Gestão</h1>
+        <p>Interface Web estática (HTML + CSS puro) conectada aos endpoints da API</p>
+    </div>
+</header>
+
+<main class="container">
+    <div class="aviso">
+        <strong>Nota técnica:</strong> Sem JavaScript, o navegador realiza apenas requisições <code>GET</code> (links) e <code>POST</code> (formulários padrão).
+    </div>
+
+    <div class="grid-cards">
+        <!-- 1. CLIENTES -->
+        <section class="card">
+            <div class="card-header">
+                <h2>1. Clientes</h2>
+                <a href="http://localhost:8080/api/clientes" target="_blank" class="btn-link">Listar Todos (GET)</a>
+            </div>
+            <form action="http://localhost:8080/api/clientes" method="POST" target="_blank">
+                <div class="campo">
+                    <label for="cli-nome">Nome Completo</label>
+                    <input type="text" id="cli-nome" name="nome" required>
+                </div>
+                <div class="campo">
+                    <label for="cli-cpf">CPF</label>
+                    <input type="text" id="cli-cpf" name="cpf" required>
+                </div>
+                <div class="campo">
+                    <label for="cli-tel">Telefone</label>
+                    <input type="text" id="cli-tel" name="telefone" required>
+                </div>
+                <div class="campo">
+                    <label for="cli-email">E-mail</label>
+                    <input type="email" id="cli-email" name="email" required>
+                </div>
+                <button type="submit" class="btn-submit">Cadastrar Cliente (POST)</button>
+            </form>
+        </section>
+
+        <!-- 2. VEÍCULOS -->
+        <section class="card">
+            <div class="card-header">
+                <h2>2. Veículos</h2>
+                <a href="http://localhost:8080/api/veiculos" target="_blank" class="btn-link">Listar Todos (GET)</a>
+            </div>
+            <form action="http://localhost:8080/api/veiculos" method="POST" target="_blank">
+                <div class="campo">
+                    <label for="vei-placa">Placa</label>
+                    <input type="text" id="vei-placa" name="placa" required>
+                </div>
+                <div class="campo">
+                    <label for="vei-modelo">Modelo</label>
+                    <input type="text" id="vei-modelo" name="modelo" required>
+                </div>
+                <div class="campo">
+                    <label for="vei-marca">Marca</label>
+                    <input type="text" id="vei-marca" name="marca" required>
+                </div>
+                <div class="campo">
+                    <label for="vei-ano">Ano</label>
+                    <input type="number" id="vei-ano" name="ano" required>
+                </div>
+                <div class="campo">
+                    <label for="vei-cliente">ID do Cliente</label>
+                    <input type="number" id="vei-cliente" name="clienteId" required>
+                </div>
+                <button type="submit" class="btn-submit">Cadastrar Veículo (POST)</button>
+            </form>
+        </section>
+
+        <!-- 3. MECÂNICOS -->
+        <section class="card">
+            <div class="card-header">
+                <h2>3. Mecânicos</h2>
+                <a href="http://localhost:8080/api/mecanicos" target="_blank" class="btn-link">Listar Todos (GET)</a>
+            </div>
+            <form action="http://localhost:8080/api/mecanicos" method="POST" target="_blank">
+                <div class="campo">
+                    <label for="mec-nome">Nome do Mecânico</label>
+                    <input type="text" id="mec-nome" name="nome" required>
+                </div>
+                <div class="campo">
+                    <label for="mec-esp">Especialidade</label>
+                    <input type="text" id="mec-esp" name="especialidade" required>
+                </div>
+                <div class="campo">
+                    <label for="mec-reg">Registro Profissional</label>
+                    <input type="text" id="mec-reg" name="registroProfissional" required>
+                </div>
+                <button type="submit" class="btn-submit">Cadastrar Mecânico (POST)</button>
+            </form>
+        </section>
+
+        <!-- 4. PEÇAS -->
+        <section class="card">
+            <div class="card-header">
+                <h2>4. Peças</h2>
+                <a href="http://localhost:8080/api/pecas" target="_blank" class="btn-link">Listar Todas (GET)</a>
+            </div>
+            <form action="http://localhost:8080/api/pecas" method="POST" target="_blank">
+                <div class="campo">
+                    <label for="pec-nome">Nome da Peça</label>
+                    <input type="text" id="pec-nome" name="nome" required>
+                </div>
+                <div class="campo">
+                    <label for="pec-cod">Código do Fabricante</label>
+                    <input type="text" id="pec-cod" name="codigoFabricante" required>
+                </div>
+                <div class="campo">
+                    <label for="pec-preco">Preço Unitário (R$)</label>
+                    <input type="number" step="0.01" id="pec-preco" name="precoUnitario" required>
+                </div>
+                <div class="campo">
+                    <label for="pec-qtd">Quantidade em Estoque</label>
+                    <input type="number" id="pec-qtd" name="quantidadeEstoque" required>
+                </div>
+                <button type="submit" class="btn-submit">Cadastrar Peça (POST)</button>
+            </form>
+        </section>
+
+        <!-- 5. ORDENS DE SERVIÇO -->
+        <section class="card">
+            <div class="card-header">
+                <h2>5. Ordens de Serviço</h2>
+                <a href="http://localhost:8080/api/ordens" target="_blank" class="btn-link">Listar Todas (GET)</a>
+            </div>
+            <form action="http://localhost:8080/api/ordens" method="POST" target="_blank">
+                <div class="campo">
+                    <label for="os-desc">Descrição do Problema</label>
+                    <input type="text" id="os-desc" name="descricaoProblema" required>
+                </div>
+                <div class="campo">
+                    <label for="os-status">Status</label>
+                    <select id="os-status" name="status" required>
+                        <option value="ABERTA">ABERTA</option>
+                        <option value="EM_ANDAMENTO">EM_ANDAMENTO</option>
+                        <option value="CONCLUIDA">CONCLUIDA</option>
+                        <option value="CANCELADA">CANCELADA</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label for="os-valor">Valor Total (R$)</label>
+                    <input type="number" step="0.01" id="os-valor" name="valorTotal" required>
+                </div>
+                <div class="campo">
+                    <label for="os-veiculo">ID do Veículo</label>
+                    <input type="number" id="os-veiculo" name="veiculoId" required>
+                </div>
+                <div class="campo">
+                    <label for="os-mecanico">ID do Mecânico</label>
+                    <input type="number" id="os-mecanico" name="mecanicoId" required>
+                </div>
+                <button type="submit" class="btn-submit">Cadastrar Ordem (POST)</button>
+            </form>
+        </section>
+    </div>
+</main>
+
+</body>
+</html>
