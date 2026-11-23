@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoTech — Painel Administrativo</title>
+    <style>
+        :root {
+            --verde-escuro: #064e3b;
+            --verde-sidebar: #022c22;
+            --verde-principal: #059669;
+            --verde-hover: #047857;
+            --verde-suave: #d1fae5;
+            --verde-texto-tag: #065f46;
+            --fundo-pagina: #f0fdf4;
+            --branco: #ffffff;
+            --texto-escuro: #0f172a;
+            --texto-cinza: #475569;
+            --borda: #cbd5e1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--fundo-pagina);
+            color: var(--texto-escuro);
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Barra Lateral Verde Escura */
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, var(--verde-sidebar) 0%, var(--verde-escuro) 100%);
+            color: var(--branco);
+            display: flex;
+            flex-direction: column;
+            padding: 28px 18px;
+            flex-shrink: 0;
+            box-shadow: 4px 0 15px rgba(2, 44, 34, 0.12);
+        }
+
+        .brand {
+            padding-bottom: 22px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            margin-bottom: 24px;
+        }
+
+        .brand h2 {
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .brand span {
+            font-size: 0.82rem;
+            color: #a7f3d0;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .menu-item {
+            background: transparent;
+            border: none;
+            color: #d1fae5;
+            text-align: left;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--branco);
+            transform: translateX(3px);
+        }
+
+        .menu-item.active {
+            background-color: var(--verde-principal);
+            color: var(--branco);
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35);
+        }
+
+        .api-pill {
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        .online {
+            background: rgba(16, 185, 129, 0.2);
+            color: #6ee7b7;
+            border: 1px solid rgba(110, 231, 183, 0.4);
+        }
+
+        .offline {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            border: 1px solid rgba(252, 165, 165, 0.4);
+        }
+
+        /* Área Principal */
+        .main-area {
+            flex: 1;
+            padding: 32px 40px;
+            overflow-y: auto;
+        }
+
+        /* Cartões de Resumo (KPIs) */
+        .kpis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 18px;
+            margin-bottom: 32px;
+        }
+
+        .kpi-card {
+            background: var(--branco);
+            padding: 20px 22px;
+            border-radius: 14px;
+            border: 1px solid #d1fae5;
+            border-bottom: 4px solid var(--verde-principal);
+            box-shadow: 0 4px 12px rgba(6, 78, 59, 0.05);
+        }
+
+        .kpi-card span {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--texto-cinza);
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .kpi-card strong {
+            font-size: 1.65rem;
+            color: var(--verde-escuro);
+        }
+
+        /* Barra de Título e Busca */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 24px;
+            background: var(--branco);
+            padding: 18px 24px;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .toolbar h1 {
+            font-size: 1.4rem;
+            color: var(--verde-escuro);
+        }
+
+        .toolbar p {
+            font-size: 0.88rem;
+            color: var(--texto-cinza);
+        }
+
+        .toolbar-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .toolbar-actions input {
+            padding: 10px 16px;
+            border: 1px solid var(--borda);
+            border-radius: 8px;
+            font-size: 0.92rem;
+            width: 240px;
+            transition: border-color 0.2s;
+        }
+
+        .toolbar-actions input:focus {
+            outline: none;
+            border-color: var(--verde-principal);
+        }
+
+        .btn-novo {
+            background-color: var(--verde-principal);
+            color: var(--branco);
+            border: none;
+            padding: 11px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.92rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 4px 10px rgba(5, 150, 105, 0.25);
+        }
+
+        .btn-novo:hover {
+            background-color: var(--verde-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Grid de Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--branco);
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid var(--verde-principal);
+            border-radius: 14px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 22px rgba(6, 78, 59, 0.09);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .id-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--texto-cinza);
+        }
+
+        .pill {
+            background: var(--verde-suave);
+            color: var(--verde-texto-tag);
+            padding: 4px 11px;
+            border-radius: 20px;
+            font-size: 0.76rem;
+            font-weight: 700;
+        }
+
+        .card h3 {
+            font-size: 1.12rem;
+            margin-bottom: 12px;
+            color: var(--texto-escuro);
+        }
+
+        .card-info p {
+            font-size: 0.9rem;
+            color: var(--texto-cinza);
+            margin-bottom: 6px;
+        }
+
+        .card-info .valor {
+            margin-top: 12px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--verde-escuro);
+        }
+
+        .card-footer {
+            margin-top: 18px;
+            padding-top: 12px;
+            border-top: 1px solid #f1f5f9;
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-ok {
+            background: var(--verde-suave);
+            color: var(--verde-texto-tag);
+            border: none;
+            padding: 7px 14px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-ok:hover {
+            background: #a7f3d0;
+        }
+
+        .btn-del {
+            background: #fee2e2;
+            color: #b91c1c;
+            border: none;
+            padding: 7px 14px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-del:hover {
+            background: #fecaca;
+        }
+
+        /* Modal Centralizado */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 44, 34, 0.6);
+            backdrop-filter: blur(3px);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 16px;
+        }
+
+        .modal-box {
+            background: var(--branco);
+            width: 100%;
+            max-width: 450px;
+            border-radius: 16px;
+            padding: 26px;
+            box-shadow: 0 25px 35px -5px rgba(0, 0, 0, 0.25);
+            border-top: 5px solid var(--verde-principal);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .modal-header h2 {
+            font-size: 1.15rem;
+            color: var(--verde-escuro);
+        }
+
+        .btn-fechar {
+            background: #f1f5f9;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            color: var(--texto-cinza);
+        }
+
+        .campo {
+            margin-bottom: 14px;
+        }
+
+        .campo label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #334155;
+        }
+
+        .campo input,
+        .campo select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--borda);
+            border-radius: 8px;
+            font-size: 0.94rem;
+        }
+
+        .campo input:focus,
+        .campo select:focus {
+            outline: none;
+            border-color: var(--verde-principal);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+        }
+
+        .btn-salvar {
+            width: 100%;
+            padding: 12px;
+            background: var(--verde-principal);
+            color: var(--branco);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background 0.2s;
+        }
+
+        .btn-salvar:hover {
+            background: var(--verde-hover);
+        }
+
+        .empty {
+            color: var(--texto-cinza);
+            font-style: italic;
+            padding: 20px;
+            background: var(--branco);
+            border-radius: 10px;
+            border: 1px dashed var(--borda);
+        }
+
+        @media (max-width: 768px) {
+            .layout { flex-direction: column; }
+            .sidebar { width: 100%; }
+            .main-area { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">
+            <h2>🌿 AutoTech</h2>
+            <span>Gestão Inteligente de Oficina</span>
+        </div>
+
+        <nav class="menu">
+            <button class="menu-item active" onclick="mudarSecao('ordens', this)">📋 Ordens de Serviço</button>
+            <button class="menu-item" onclick="mudarSecao('clientes', this)">👤 Clientes</button>
+            <button class="menu-item" onclick="mudarSecao('veiculos', this)">🚗 Veículos</button>
+            <button class="menu-item" onclick="mudarSecao('mecanicos', this)">🔧 Mecânicos</button>
+            <button class="menu-item" onclick="mudarSecao('pecas', this)">⚙️ Peças</button>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div id="api-status" class="api-pill offline">Verificando API...</div>
+        </div>
+    </aside>
+
+    <!-- ÁREA PRINCIPAL -->
+    <main class="main-area">
+        <!-- KPIs -->
+        <section class="kpis">
+            <div class="kpi-card">
+                <span>Ordens em Aberto</span>
+                <strong id="kpi-ordens">0</strong>
+            </div>
+            <div class="kpi-card">
+                <span>Clientes Ativos</span>
+                <strong id="kpi-clientes">0</strong>
+            </div>
+            <div class="kpi-card">
+                <span>Veículos Registrados</span>
+                <strong id="kpi-veiculos">0</strong>
+            </div>
+            <div class="kpi-card">
+                <span>Receita Total (OS)</span>
+                <strong id="kpi-valor">R$ 0,00</strong>
+            </div>
+        </section>
+
+        <!-- BARRA DE AÇÕES -->
+        <header class="toolbar">
+            <div>
+                <h1 id="titulo-secao">Ordens de Serviço</h1>
+                <p id="subtitulo-secao">Gerencie e acompanhe os serviços em andamento</p>
+            </div>
+            <div class="toolbar-actions">
+                <input type="text" id="campo-busca" placeholder="Filtrar registros..." oninput="filtrarCards()">
+                <button class="btn-novo" onclick="abrirModal()">+ Novo Cadastro</button>
+            </div>
+        </header>
+
+        <!-- GRID DE CARDS -->
+        <section id="container-cards" class="cards-grid"></section>
+    </main>
+</div>
+
+<!-- MODAL DE CADASTRO -->
+<div id="modal-overlay" class="modal-overlay" onclick="fecharModalFora(event)">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2 id="modal-titulo">Novo Registro</h2>
+            <button class="btn-fechar" onclick="fecharModal()">✕</button>
+        </div>
+
+        <!-- FORM ORDENS -->
+        <form id="form-ordens" class="form-modal" onsubmit="salvar(event, 'ordens')">
+            <div class="campo"><label>Descrição do Problema</label><input type="text" name="descricaoProblema" required></div>
+            <div class="campo">
+                <label>Status</label>
+                <select name="status" required>
+                    <option value="ABERTA">ABERTA</option>
+                    <option value="EM_ANDAMENTO">EM_ANDAMENTO</option>
+                    <option value="CONCLUIDA">CONCLUIDA</option>
+                    <option value="CANCELADA">CANCELADA</option>
+                </select>
+            </div>
+            <div class="campo"><label>Valor Total (R$)</label><input type="number" step="0.01" name="valorTotal" required></div>
+            <div class="campo"><label>Veículo</label><select name="veiculoId" id="sel-veiculo" required></select></div>
+            <div class="campo"><label>Mecânico</label><select name="mecanicoId" id="sel-mecanico" required></select></div>
+            <button type="submit" class="btn-salvar">Cadastrar Ordem</button>
+        </form>
+
+        <!-- FORM CLIENTES -->
+        <form id="form-clientes" class="form-modal" style="display:none" onsubmit="salvar(event, 'clientes')">
+            <div class="campo"><label>Nome Completo</label><input type="text" name="nome" required></div>
+            <div class="campo"><label>CPF</label><input type="text" name="cpf" required></div>
+            <div class="campo"><label>Telefone</label><input type="text" name="telefone" required></div>
+            <div class="campo"><label>E-mail</label><input type="email" name="email" required></div>
+            <button type="submit" class="btn-salvar">Cadastrar Cliente</button>
+        </form>
+
+        <!-- FORM VEÍCULOS -->
+        <form id="form-veiculos" class="form-modal" style="display:none" onsubmit="salvar(event, 'veiculos')">
+            <div class="campo"><label>Placa</label><input type="text" name="placa" required></div>
+            <div class="campo"><label>Modelo</label><input type="text" name="modelo" required></div>
+            <div class="campo"><label>Marca</label><input type="text" name="marca" required></div>
+            <div class="campo"><label>Ano</label><input type="number" name="ano" required></div>
+            <div class="campo"><label>Proprietário (Cliente)</label><select name="clienteId" id="sel-cliente" required></select></div>
+            <button type="submit" class="btn-salvar">Cadastrar Veículo</button>
+        </form>
+
+        <!-- FORM MECÂNICOS -->
+        <form id="form-mecanicos" class="form-modal" style="display:none" onsubmit="salvar(event, 'mecanicos')">
+            <div class="campo"><label>Nome do Mecânico</label><input type="text" name="nome" required></div>
+            <div class="campo"><label>Especialidade</label><input type="text" name="especialidade" required></div>
+            <div class="campo"><label>Registro Profissional</label><input type="text" name="registroProfissional" required></div>
+            <button type="submit" class="btn-salvar">Cadastrar Mecânico</button>
+        </form>
+
+        <!-- FORM PEÇAS -->
+        <form id="form-pecas" class="form-modal" style="display:none" onsubmit="salvar(event, 'pecas')">
+            <div class="campo"><label>Nome da Peça</label><input type="text" name="nome" required></div>
+            <div class="campo"><label>Código do Fabricante</label><input type="text" name="codigoFabricante" required></div>
+            <div class="campo"><label>Preço Unitário (R$)</label><input type="number" step="0.01" name="precoUnitario" required></div>
+            <div class="campo"><label>Quantidade em Estoque</label><input type="number" name="quantidadeEstoque" required></div>
+            <button type="submit" class="btn-salvar">Cadastrar Peça</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const API = 'http://localhost:8080/api';
+    let secaoAtual = 'ordens';
+    let cache = { ordens: [], clientes: [], veiculos: [], mecanicos: [], pecas: [] };
+
+    const titulos = {
+        ordens: ['Ordens de Serviço', 'Gerencie e acompanhe os serviços da oficina'],
+        clientes: ['Clientes Cadastrados', 'Base de proprietários e contatos'],
+        veiculos: ['Frota de Veículos', 'Veículos vinculados aos clientes'],
+        mecanicos: ['Equipe de Mecânicos', 'Profissionais e especialidades'],
+        pecas: ['Estoque de Peças', 'Controle de componentes e valores']
+    };
+
+    function mudarSecao(secao, btn) {
+        secaoAtual = secao;
+        document.querySelectorAll('.menu-item').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('titulo-secao').textContent = titulos[secao][0];
+        document.getElementById('subtitulo-secao').textContent = titulos[secao][1];
+        document.getElementById('campo-busca').value = '';
+        renderizarSecao();
+    }
+
+    function abrirModal() {
+        document.querySelectorAll('.form-modal').forEach(f => f.style.display = 'none');
+        document.getElementById('form-' + secaoAtual).style.display = 'block';
+        document.getElementById('modal-titulo').textContent = 'Novo Cadastro — ' + titulos[secaoAtual][0];
+        document.getElementById('modal-overlay').style.display = 'flex';
+    }
+
+    function fecharModal() {
+        document.getElementById('modal-overlay').style.display = 'none';
+    }
+
+    function fecharModalFora(e) {
+        if (e.target.id === 'modal-overlay') fecharModal();
+    }
+
+    async function sincronizar() {
+        const pill = document.getElementById('api-status');
+        try {
+            const [ordens, clientes, veiculos, mecanicos, pecas] = await Promise.all([
+                fetch(`${API}/ordens`).then(r => r.ok ? r.json() : []),
+                fetch(`${API}/clientes`).then(r => r.ok ? r.json() : []),
+                fetch(`${API}/veiculos`).then(r => r.ok ? r.json() : []),
+                fetch(`${API}/mecanicos`).then(r => r.ok ? r.json() : []),
+                fetch(`${API}/pecas`).then(r => r.ok ? r.json() : [])
+            ]);
+
+            cache = { ordens, clientes, veiculos, mecanicos, pecas };
+            pill.textContent = '● API Conectada';
+            pill.className = 'api-pill online';
+
+            document.getElementById('kpi-ordens').textContent = ordens.filter(o => o.status !== 'CONCLUIDA').length;
+            document.getElementById('kpi-clientes').textContent = clientes.length;
+            document.getElementById('kpi-veiculos').textContent = veiculos.length;
+            const total = ordens.reduce((acc, o) => acc + Number(o.valorTotal || 0), 0);
+            document.getElementById('kpi-valor').textContent = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+            document.getElementById('sel-cliente').innerHTML = clientes.map(c => `<option value="${c.id}">${c.id} - ${c.nome}</option>`).join('');
+            document.getElementById('sel-veiculo').innerHTML = veiculos.map(v => `<option value="${v.id}">${v.id} - ${v.modelo} (${v.placa})</option>`).join('');
+            document.getElementById('sel-mecanico').innerHTML = mecanicos.map(m => `<option value="${m.id}">${m.id} - ${m.nome}</option>`).join('');
+
+            renderizarSecao();
+        } catch (e) {
+            pill.textContent = '● API Desconectada';
+            pill.className = 'api-pill offline';
+        }
+    }
+
+    function renderizarSecao(filtro = '') {
+        const grid = document.getElementById('container-cards');
+        const termo = filtro.toLowerCase();
+        const lista = cache[secaoAtual].filter(item => JSON.stringify(item).toLowerCase().includes(termo));
+
+        if (!lista.length) {
+            grid.innerHTML = '<p class="empty">Nenhum registro encontrado nesta seção. Clique em "+ Novo Cadastro" para adicionar.</p>';
+            return;
+        }
+
+        if (secaoAtual === 'ordens') {
+            grid.innerHTML = lista.map(os => `
+                <article class="card">
+                    <div>
+                        <div class="card-top">
+                            <span class="id-label">OS #${os.id}</span>
+                            <span class="pill">${os.status}</span>
+                        </div>
+                        <h3>${os.descricaoProblema}</h3>
+                        <div class="card-info">
+                            <p><strong>Veículo:</strong> ${os.veiculo?.modelo || 'ID ' + (os.veiculo?.id || os.veiculoId || '-')}</p>
+                            <p><strong>Mecânico:</strong> ${os.mecanico?.nome || 'ID ' + (os.mecanico?.id || os.mecanicoId || '-')}</p>
+                            <p class="valor">R$ ${Number(os.valorTotal || 0).toFixed(2)}</p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        ${os.status !== 'CONCLUIDA' ? `<button class="btn-ok" onclick='concluir(${JSON.stringify(os)})'>✔ Concluir</button>` : ''}
+                        <button class="btn-del" onclick="excluir('ordens', ${os.id})">Excluir</button>
+                    </div>
+                </article>
+            `).join('');
+        } else if (secaoAtual === 'clientes') {
+            grid.innerHTML = lista.map(c => `
+                <article class="card">
+                    <div>
+                        <div class="card-top"><span class="id-label">ID #${c.id}</span><span class="pill">Cliente</span></div>
+                        <h3>${c.nome}</h3>
+                        <div class="card-info">
+                            <p><strong>CPF:</strong> ${c.cpf}</p>
+                            <p><strong>Tel:</strong> ${c.telefone}</p>
+                            <p><strong>E-mail:</strong> ${c.email}</p>
+                        </div>
+                    </div>
+                    <div class="card-footer"><button class="btn-del" onclick="excluir('clientes', ${c.id})">Excluir</button></div>
+                </article>
+            `).join('');
+        } else if (secaoAtual === 'veiculos') {
+            grid.innerHTML = lista.map(v => `
+                <article class="card">
+                    <div>
+                        <div class="card-top"><span class="id-label">${v.placa}</span><span class="pill">${v.ano}</span></div>
+                        <h3>${v.marca} ${v.modelo}</h3>
+                        <div class="card-info">
+                            <p><strong>Proprietário:</strong> ${v.cliente?.nome || 'ID ' + (v.cliente?.id || v.clienteId || '-')}</p>
+                        </div>
+                    </div>
+                    <div class="card-footer"><button class="btn-del" onclick="excluir('veiculos', ${v.id})">Excluir</button></div>
+                </article>
+            `).join('');
+        } else if (secaoAtual === 'mecanicos') {
+            grid.innerHTML = lista.map(m => `
+                <article class="card">
+                    <div>
+                        <div class="card-top"><span class="id-label">ID #${m.id}</span><span class="pill">${m.especialidade}</span></div>
+                        <h3>${m.nome}</h3>
+                        <div class="card-info"><p><strong>Registro:</strong> ${m.registroProfissional}</p></div>
+                    </div>
+                    <div class="card-footer"><button class="btn-del" onclick="excluir('mecanicos', ${m.id})">Excluir</button></div>
+                </article>
+            `).join('');
+        } else if (secaoAtual === 'pecas') {
+            grid.innerHTML = lista.map(p => `
+                <article class="card">
+                    <div>
+                        <div class="card-top"><span class="id-label">${p.codigoFabricante}</span><span class="pill">Estoque: ${p.quantidadeEstoque}</span></div>
+                        <h3>${p.nome}</h3>
+                        <div class="card-info"><p class="valor">R$ ${Number(p.precoUnitario || 0).toFixed(2)}</p></div>
+                    </div>
+                    <div class="card-footer"><button class="btn-del" onclick="excluir('pecas', ${p.id})">Excluir</button></div>
+                </article>
+            `).join('');
+        }
+    }
+
+    async function salvar(e, rota) {
+        e.preventDefault();
+        const form = e.target;
+        const raw = Object.fromEntries(new FormData(form).entries());
+        const dados = { ...raw };
+
+        // Converte números e monta os objetos de relacionamento limpos
+        if (dados.valorTotal) dados.valorTotal = Number(dados.valorTotal);
+        if (dados.ano) dados.ano = Number(dados.ano);
+        if (dados.precoUnitario) dados.precoUnitario = Number(dados.precoUnitario);
+        if (dados.quantidadeEstoque) dados.quantidadeEstoque = Number(dados.quantidadeEstoque);
+
+        if (dados.clienteId) {
+            dados.cliente = { id: Number(dados.clienteId) };
+            delete dados.clienteId;
+        }
+        if (dados.veiculoId) {
+            dados.veiculo = { id: Number(dados.veiculoId) };
+            delete dados.veiculoId;
+        }
+        if (dados.mecanicoId) {
+            dados.mecanico = { id: Number(dados.mecanicoId) };
+            delete dados.mecanicoId;
+        }
+
+        const res = await fetch(`${API}/${rota}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dados)
+        });
+
+        if (res.ok) {
+            form.reset();
+            fecharModal();
+            sincronizar();
+        } else {
+            const erroTexto = await res.text();
+            console.error('Erro detalhado:', erroTexto);
+            alert('Erro ao cadastrar (Status ' + res.status + '). Veja o console do IntelliJ para o detalhe.');
+        }
+    }
+
+    async function excluir(rota, id) {
+        if (!confirm('Confirma exclusão?')) return;
+        const res = await fetch(`${API}/${rota}/${id}`, { method: 'DELETE' });
+        if (res.ok) sincronizar();
+    }
+
+    async function concluir(os) {
+        const res = await fetch(`${API}/ordens/${os.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ...os, status: 'CONCLUIDA' })
+        });
+        if (res.ok) sincronizar();
+    }
+
+    sincronizar();
+</script>
+</body>
+</html>

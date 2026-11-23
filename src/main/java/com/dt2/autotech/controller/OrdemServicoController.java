@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/ordens")
-@CrossOrigin(origins = "*")
+@CrossOrigin("*")
 public class OrdemServicoController {
 
     private final OrdemServicoRepository repository;
