@@ -99,10 +99,20 @@ Registro de profissional e atualização automática da equipe técnica
 
 <img width="1919" height="990" alt="Captura de tela 2026-11-23 161857" src="https://github.com/user-attachments/assets/95a0dc72-5900-4e75-8a8e-98213e7b0601" />
 
-<img width="588" height="614" alt="Captura de tela 2026-11-23 161943" src="https://github.com/user-attachments/assets/c7b5a88b-b0c0-4a2b-8013-36a5fbe1c370" />
-
-<img width="1445" height="826" alt="Captura de tela 2026-11-23 161948" src="https://github.com/user-attachments/assets/7a0e2549-3f83-4eac-8aeb-100b0fbdc77f" />
+<img width="1919" height="756" alt="Captura de tela 2026-11-23 164430" src="https://github.com/user-attachments/assets/ec79d139-26fb-4d71-8799-05ddcd8cf582" />
 
 3. Controle de Estoque de Peças
 Cadastro de peças com código de fabricante, valor unitário e quantidade em estoque:
 
+<img width="588" height="614" alt="Captura de tela 2026-11-23 161943" src="https://github.com/user-attachments/assets/c7b5a88b-b0c0-4a2b-8013-36a5fbe1c370" />
+
+<img width="1445" height="826" alt="Captura de tela 2026-11-23 161948" src="https://github.com/user-attachments/assets/7a0e2549-3f83-4eac-8aeb-100b0fbdc77f" />
+
+4. Abertura de Ordem de Serviço e Atualização dos KPIs
+Abertura de OS associando veículo e mecânico, refletindo imediatamente no card de serviço e na receita total do dashboard:
+
+<img width="1919" height="949" alt="Captura de tela 2026-11-23 162000" src="https://github.com/user-attachments/assets/b1602d73-97fe-4c03-a821-819eb07a275e" />
+
+<img width="826" height="811" alt="Captura de tela 2026-11-23 162016" src="https://github.com/user-attachments/assets/eca93ac0-55ac-4958-a332-214ab28e76d0" />
+
+<img width="1919" height="995" alt="Captura de tela 2026-11-23 162644" src="https://github.com/user-attachments/assets/dab8f67c-1081-4037-99c6-a23f10d4b3ac" />
