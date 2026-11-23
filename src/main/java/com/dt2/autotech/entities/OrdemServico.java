@@ -36,6 +36,9 @@ public class OrdemServico {
         this.mecanicoId = mecanicoId;
     }
 
+    public OrdemServico() {
+    }
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getDescricaoProblema() { return descricaoProblema; }

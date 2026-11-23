@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/clientes")
 public class ClienteController {
@@ -31,7 +32,7 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> cadastrar(@RequestBody Cliente cliente) {
+    public ResponseEntity<Cliente> cadastrar(@ModelAttribute Cliente cliente) {
         return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(cliente));
     }
 
