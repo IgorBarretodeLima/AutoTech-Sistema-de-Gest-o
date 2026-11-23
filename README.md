@@ -86,7 +86,7 @@ Abra http://localhost:8080/ e verifique se o indicador no canto inferior esquerd
 ###📸 Demonstração do Sistema em Funcionamento
 Abaixo estão as capturas de tela comprovando a integração completa entre o Front-end e a API Spring Boot:
 
-###1. Cadastro e Listagem de Veículos
+### 1. Cadastro e Listagem de Veículos
 Vinculação de veículo ao cliente cadastrado e exibição imediata no card da frota:
 
 <img width="1919" height="1001" alt="Captura de tela 2026-11-23 161758" src="https://github.com/user-attachments/assets/fe43fa7b-34ac-4748-aa14-065fd179f5e8" />
@@ -95,21 +95,21 @@ Vinculação de veículo ao cliente cadastrado e exibição imediata no card da 
 
 <img width="1919" height="985" alt="Captura de tela 2026-11-23 161843" src="https://github.com/user-attachments/assets/a4f5d6cc-0faf-4b15-8fd1-67780ec84787" />
 
-###2. Cadastro de Mecânicos
+### 2. Cadastro de Mecânicos
 Registro de profissional e atualização automática da equipe técnica
 
 <img width="1919" height="990" alt="Captura de tela 2026-11-23 161857" src="https://github.com/user-attachments/assets/95a0dc72-5900-4e75-8a8e-98213e7b0601" />
 
 <img width="1919" height="756" alt="Captura de tela 2026-11-23 164430" src="https://github.com/user-attachments/assets/ec79d139-26fb-4d71-8799-05ddcd8cf582" />
 
-###3. Controle de Estoque de Peças
+### 3. Controle de Estoque de Peças
 Cadastro de peças com código de fabricante, valor unitário e quantidade em estoque:
 
 <img width="588" height="614" alt="Captura de tela 2026-11-23 161943" src="https://github.com/user-attachments/assets/c7b5a88b-b0c0-4a2b-8013-36a5fbe1c370" />
 
 <img width="1445" height="826" alt="Captura de tela 2026-11-23 161948" src="https://github.com/user-attachments/assets/7a0e2549-3f83-4eac-8aeb-100b0fbdc77f" />
 
-###4. Abertura de Ordem de Serviço e Atualização dos KPIs
+### 4. Abertura de Ordem de Serviço e Atualização dos KPIs
 Abertura de OS associando veículo e mecânico, refletindo imediatamente no card de serviço e na receita total do dashboard:
 
 <img width="1919" height="949" alt="Captura de tela 2026-11-23 162000" src="https://github.com/user-attachments/assets/b1602d73-97fe-4c03-a821-819eb07a275e" />
