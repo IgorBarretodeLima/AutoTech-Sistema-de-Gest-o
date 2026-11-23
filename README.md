@@ -45,7 +45,7 @@ Em oficinas mecânicas, o controle manual de clientes, histórico de veículos, 
 
 ## 🏗️ Arquitetura do Projeto
 
-text
+```text
 autotech/
 ├── src/
 │   └── main/
@@ -60,7 +60,8 @@ autotech/
 ├── docs/                        # Capturas de tela do sistema em funcionamento
 ├── pom.xml
 └── README.md
-'
+```
+
 🚀 Como Executar o Projeto
 Clone o repositório:
 
