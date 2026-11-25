@@ -10,7 +10,9 @@ public class OrdemServico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
     private String descricaoProblema;
+    @NotBlank
     private String status;
     private BigDecimal valorTotal;
     private LocalDateTime dataAbertura = LocalDateTime.now();

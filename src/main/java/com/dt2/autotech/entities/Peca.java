@@ -1,6 +1,9 @@
 package com.dt2.autotech.entities;
 
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
+import org.jspecify.annotations.NonNull;
+
 import java.math.BigDecimal;
 
 @Entity
@@ -9,9 +12,13 @@ public class Peca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
     private String nome;
+    @NotBlank
     private String codigoFabricante;
+    @NotNull
     private BigDecimal precoUnitario;
+    @NotNull
     private Integer quantidadeEstoque;
 
     public Peca(String nome, String codigoFabricante, BigDecimal precoUnitario, Integer quantidadeEstoque) {
