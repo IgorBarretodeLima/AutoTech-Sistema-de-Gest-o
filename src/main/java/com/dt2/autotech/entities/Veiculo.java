@@ -1,6 +1,7 @@
 package com.dt2.autotech.entities;
 
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.Date;
 
@@ -13,12 +14,14 @@ public class Veiculo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    @Column(unique = true)
+    @NotBlank
     private String placa;
+    @NotBlank
     private String modelo;
+    @NotBlank
     private String marca;
     private Date ano;
+    @NotNull
     private Long clienteId;
 
 
